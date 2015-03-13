@@ -17,7 +17,7 @@ module.exports = function(src, opts) {
   opts = opts || {};
   opts.encode = opts.encode || function(moduleName) { return moduleName };
   var parseOpts = {ecmaVersion: 6};
-  var ast = acorn.parse(src, parseOpts);
+  var ast = opts.ast || acorn.parse(src, parseOpts);
 
   // module.exports =
   var isExportAssignment = function(node) {
@@ -46,6 +46,8 @@ module.exports = function(src, opts) {
 
     //console.log('anode=',anode);
   }), walkall.traversers);
+
+  if (opts.returnAst) return ast;
 
   var newSrc = escodegen.generate(ast);
 
