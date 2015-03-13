@@ -1,7 +1,7 @@
 {
   "name": "cjs2es6export",
   "description": "convert CommonJS module assignments to ES6 module export statements",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "main": "cjs2es6export.js",
   "repository": {
     "type": "git",
