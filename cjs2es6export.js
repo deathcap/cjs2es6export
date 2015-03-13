@@ -4,6 +4,14 @@ var acorn = require('acorn');
 var walk = require('acorn/util/walk');
 var walkall = require('walkall');
 var escodegen = require('escodegen');
+var object_assign = require('object.assign');
+
+// Delete all properties from an object, like obj={} but retains identity TODO: modularize?
+var object_clear = function(obj) {
+  for (var prop in obj) {
+    delete obj[prop];
+  }
+};
 
 module.exports = function(src, opts) {
   opts = opts || {};
@@ -11,16 +19,29 @@ module.exports = function(src, opts) {
   var parseOpts = {ecmaVersion: 6};
   var ast = acorn.parse(src, parseOpts);
 
-  /* TODO: search for module.exports = ...
-  var isRequire = function(node) {
-    var c = node.callee;
-    return c &&
-      node.type === 'CallExpression' &&
-      c.type === 'Identifier' &&
-      c.name === 'require';
+  // module.exports =
+  var isExportAssignment = function(node) {
+    if (node.type !== 'AssignmentExpression') return false;
+
+    return node.left.type === 'MemberExpression' &&
+      node.left.object.type === 'Identifier' && node.left.object.name === 'module' &&
+      node.left.property.type === 'Identifier' && node.left.property.name === 'exports';
   };
 
   walk.simple(ast, walkall.makeVisitors(function(anode) {
+    if (!isExportAssignment(anode))
+      return;
+
+    console.log("ANODE",anode);
+
+    if (anode.right.type === 'FunctionExpression') {
+      var f = anode.right;
+      object_clear(anode);
+      object_assign(anode, f);
+      console.log("NEW",anode);
+    }
+
+
     //console.log('Found node type',anode.type,anode);
     //console.log(escodegen.generate(node));
 
@@ -78,7 +99,6 @@ module.exports = function(src, opts) {
     //
 
   }), walkall.traversers);
-    */
 
   var newSrc = escodegen.generate(ast);
 
