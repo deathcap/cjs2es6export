@@ -1,11 +1,11 @@
 {
-  "name": "cjs2es6import",
-  "description": "convert CommonJS require expressions to ES6 module import statements",
+  "name": "cjs2es6export",
+  "description": "convert CommonJS module assignments to ES6 module export statements",
   "version": "0.1.0",
-  "main": "cjs2es6import.js",
+  "main": "cjs2es6export.js",
   "repository": {
     "type": "git",
-    "url": "git@github.com:deathcap/cjs2es6import.git"
+    "url": "git@github.com:deathcap/cjs2es6export.git"
   },
   "keywords": [],
   "dependencies": {

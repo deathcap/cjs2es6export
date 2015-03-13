@@ -11,6 +11,7 @@ module.exports = function(src, opts) {
   var parseOpts = {ecmaVersion: 6};
   var ast = acorn.parse(src, parseOpts);
 
+  /* TODO: search for module.exports = ...
   var isRequire = function(node) {
     var c = node.callee;
     return c &&
@@ -74,8 +75,10 @@ module.exports = function(src, opts) {
     delete anode.kind;
     delete anode.declarations;
     //console.log('anode=',anode);
+    //
 
   }), walkall.traversers);
+    */
 
   var newSrc = escodegen.generate(ast);
 
