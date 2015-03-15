@@ -5,13 +5,7 @@ var walk = require('acorn/util/walk');
 var walkall = require('walkall');
 var escodegen = require('escodegen');
 var object_assign = require('object.assign');
-
-// Delete all properties from an object, like obj={} but retains identity TODO: modularize?
-var object_clear = function(obj) {
-  for (var prop in obj) {
-    delete obj[prop];
-  }
-};
+var object_clear = require('object-clear');
 
 module.exports = function(src, opts) {
   opts = opts || {};
