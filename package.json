@@ -13,7 +13,7 @@
     "escodegen": "^1.6.1",
     "object-clear": "^0.1.0",
     "object.assign": "^1.1.1",
-    "walkall": "0.0.3"
+    "walkall": "0.0.5"
   },
   "scripts": {
     "start": "node demo/demo.js"
